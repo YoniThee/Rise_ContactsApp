@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  contacts_app:
+    image: rise-contacts-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Map port 44328 inside the container to port 8080 on the host
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      #- DefaultConnection=Server=db,1433;Database=Rise_ContactsApp;User Id=sa;Password=Yt140797;Encrypt=false;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - contactsnetwork
+    restart: on-failure
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Yt140797
+    ports:
+      - "1433:1433"
+    networks:
+      - contactsnetwork
+    volumes:
+      - sql_data:/var/opt/mssql
+
+networks:
+  contactsnetwork:
+
+volumes:
+  sql_data:

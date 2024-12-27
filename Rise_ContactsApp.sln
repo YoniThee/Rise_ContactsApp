@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rise_ContactsApp", "Rise_ContactsApp.csproj", "{AE81E74C-53EE-401D-BACD-8D3CF52CEC29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rise_ContactsApp.Tests", "..\Rise_ContactsApp.Tests\Rise_ContactsApp.Tests.csproj", "{360AA051-FF97-4579-B789-8BA136724934}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE81E74C-53EE-401D-BACD-8D3CF52CEC29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE81E74C-53EE-401D-BACD-8D3CF52CEC29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE81E74C-53EE-401D-BACD-8D3CF52CEC29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE81E74C-53EE-401D-BACD-8D3CF52CEC29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{360AA051-FF97-4579-B789-8BA136724934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{360AA051-FF97-4579-B789-8BA136724934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{360AA051-FF97-4579-B789-8BA136724934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{360AA051-FF97-4579-B789-8BA136724934}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE10F84D-5C2B-49CE-A501-F159099E2E53}
+	EndGlobalSection
+EndGlobal

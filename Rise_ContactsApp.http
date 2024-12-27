@@ -1,0 +1,6 @@
+@Rise_ContactsApp_HostAddress = http://localhost:5228
+
+GET {{Rise_ContactsApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
