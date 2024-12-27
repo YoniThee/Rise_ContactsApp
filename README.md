@@ -7,12 +7,12 @@ If you want to use also in UI you can clone also this repository''''''''''''addl
 ### Introduction
 Rise ContactsApp is designed to be a lightweight solution for managing contacts. Whether you are building a personal address book or a larger contact management system for a team, this API provides simple CRUD operations along with search functionality. It exposes the following endpoints for interacting with contact data:
 
-GET /Contacts: List all contacts with pagination
-POST /Contacts: Create a new contact
-GET /Contacts/{id}: Retrieve a contact by ID
-PUT /Contacts/{id}: Update a contact by ID
-DELETE /Contacts/{id}: Delete a contact by ID
-GET /Contacts/search: Search contacts by query
+* GET /Contacts: List all contacts with pagination
+* POST /Contacts: Create a new contact
+* GET /Contacts/{id}: Retrieve a contact by ID
+* PUT /Contacts/{id}: Update a contact by ID
+* DELETE /Contacts/{id}: Delete a contact by ID
+* GET /Contacts/search: Search contacts by query
 
 ### Installation
 Follow these steps to install and set up the Rise ContactsApp on your local machine.
