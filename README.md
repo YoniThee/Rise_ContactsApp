@@ -2,7 +2,7 @@
 
 ## overview
 this is is allows you to manage contacts. You can create, read, update, delete, and search for contacts. this repo is enable to getall the functionality of this app by using swagger to get the exposed endpoints.
-If you want to use also in UI you can clone also this repository''''''''''''addlink'''''''''''' and connect easealy to this server.
+If you want to use also in UI you can clone also this repository https://github.com/YoniThee/rise-contacts-app.git and connect easealy to this server.
 
 ### Introduction
 Rise ContactsApp is designed to be a lightweight solution for managing contacts. Whether you are building a personal address book or a larger contact management system for a team, this API provides simple CRUD operations along with search functionality. It exposes the following endpoints for interacting with contact data:
