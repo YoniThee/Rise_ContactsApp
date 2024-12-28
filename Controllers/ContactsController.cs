@@ -24,63 +24,89 @@ namespace Rise_ContactsApp.Controllers
         public async Task<ActionResult<List<Contact>>> GetContacts(int page = 1, int pageSize = 10)
         {
             var contacts = await _contactService.GetContactsAsync(page, pageSize);
+            _logger.LogInformation("Fetched {Count} contacts", contacts.Count);
             return Ok(contacts);
         }
 
-        // GET: api/contacts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Contact>> GetContact(int id)
         {
             var contact = await _contactService.GetContactByIdAsync(id);
-            if (contact == null) return NotFound();
+            if (contact == null)
+            {
+                _logger.LogWarning("Contact with ID: {Id} not found", id);
+                return NotFound();
+            }
+            _logger.LogInformation("Contact with ID: {Id} retrieved successfully", id);
+
             return Ok(contact);
         }
 
-        // POST: api/contacts
         [HttpPost]
         public async Task<ActionResult<Contact>> AddContact(ContactDataRequest contactData)
         {
+            _logger.LogInformation("Adding new contact with FirstName: {FirstName}, LastName: {LastName}",
+                        contactData.FirstName, contactData.LastName);
             var contact = convertToContact(contactData);
-            try {
+
+            try
+            {
                 var createdContact = await _contactService.AddContactAsync(contact);
+                _logger.LogInformation("Contact with ID: {ContactId} created successfully", createdContact.ContactId);
                 return CreatedAtAction(nameof(GetContact), new { id = createdContact.ContactId }, createdContact);
             }
             catch (ArgumentException ex)
             {
+                _logger.LogError(ex, "Error adding contact with FirstName: {FirstName}, LastName: {LastName}",
+                                 contactData.FirstName, contactData.LastName);
                 return BadRequest(new { message = ex.Message });
             }
         }
 
-        // PUT: api/contacts/5
         [HttpPut("{id}")]
         public async Task<ActionResult<Contact>> UpdateContact(int id, ContactDataRequest contactData)
         {
+            _logger.LogInformation("Updating contact with ID: {Id} - FirstName: {FirstName}, LastName: {LastName}",
+                         id, contactData.FirstName, contactData.LastName);
             var contact = convertToContact(contactData);
             try
             {
                 var updatedContact = await _contactService.UpdateContactAsync(id, contact);
-                if (updatedContact == null) return NotFound();
+                if (updatedContact == null)
+                {
+                    _logger.LogWarning("Contact with ID: {Id} not found for update", id);
+                    return NotFound();
+                }
+                _logger.LogInformation("Contact with ID: {Id} updated successfully", id);
                 return Ok(updatedContact);
-            }catch (ArgumentException ex)
+            }
+            catch (ArgumentException ex)
             {
+                _logger.LogError(ex, "Error updating contact with ID: {Id}", id);
                 return BadRequest(new { message = ex.Message });
             }
         }
 
-        // DELETE: api/contacts/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteContact(int id)
         {
+            _logger.LogInformation("Deleting contact with ID: {Id}", id);
             var success = await _contactService.DeleteContactAsync(id);
-            if (!success) return NotFound();
+            if (!success) {
+                _logger.LogWarning("Contact with ID: {Id} not found for deletion", id);
+                return NotFound(); 
+            }
+            _logger.LogInformation("Contact with ID: {Id} deleted successfully", id);
             return NoContent();
         }
 
-        // GET: api/contacts/search?query=John
         [HttpGet("search")]
         public async Task<ActionResult<List<Contact>>> SearchContacts(string query)
         {
+            _logger.LogInformation("Searching contacts with query: {Query}", query);
+
             var contacts = await _contactService.SearchContactsAsync(query);
+            _logger.LogInformation("Found {Count} contacts matching query: {Query}", contacts.Count, query);
             return Ok(contacts);
         }
 
