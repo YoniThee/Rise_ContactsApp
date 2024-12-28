@@ -1,0 +1,662 @@
+{
+	"info": {
+		"_postman_id": "1c04ee87-7a10-43e8-8bf1-fa0541482d14",
+		"name": "Rise_ContactApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40037950"
+	},
+	"item": [
+		{
+			"name": "HappyPath",
+			"item": [
+				{
+					"name": "Post new Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const data = jsonData;\r",
+									"pm.environment.set(\"first_contactId\", data.contactId);\r",
+									"pm.environment.set(\"initialize_phoneNumber\", data.phoneNumber);\r",
+									"\r",
+									"pm.test(\"Contact Created Successfully\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"David\",\r\n  \"lastName\": \"Levi\",\r\n  \"phoneNumber\": \"1234567\",\r\n  \"address\": \"Lod\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Contacts by Pages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"First Page received Successfully\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ContactService}}/Contacts",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search For Specific Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Search return Successfully\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ContactService}}/Contacts/search?query=David",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "David"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specific Contact By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Contact is exist and received\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Specific Contact By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Contact updated Successfully\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"David\",\r\n  \"lastName\": \"Levi\",\r\n  \"phoneNumber\": \"99999\",\r\n  \"address\": \"Lod\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specific Contact By ID After Updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Contact is exist and received\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"const jsonData = pm.response.json();\r",
+									"const phoneNumber = jsonData.phoneNumber;\r",
+									"\r",
+									"pm.test(\"The changes updated at the contact\" ,()=>{\r",
+									"    pm.expect(pm.environment.get(\"initialize_phoneNumber\")).to.not.equal(phoneNumber);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Specific Contact By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete request sended Successfully\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Failed To Get Specific Contact After Deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Contact does not exist\", () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validation_And_Error_Handling",
+			"item": [
+				{
+					"name": "0. Post new valid Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const data = jsonData;\r",
+									"pm.environment.set(\"first_contactId\", data.contactId);\r",
+									"pm.environment.set(\"initialize_phoneNumber\", data.phoneNumber);\r",
+									"\r",
+									"pm.test(\"Contact Created Successfully\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"David\",\r\n  \"lastName\": \"Levi\",\r\n  \"phoneNumber\": \"1234567\",\r\n  \"address\": \"Tel Aviv\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. Failed To Post new Contact With Invalid PhoneNumber",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const data = jsonData;\r",
+									"\r",
+									"\r",
+									"pm.test(\"Invalid contact information - contact not created\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.expect(data.message).to.be.equal(\"Phone number must contain only digits.\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"David\",\r\n  \"lastName\": \"Levi\",\r\n  \"phoneNumber\": \"1234567A\",\r\n  \"address\": \"Lod\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.Failed To Update Specific Contact By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const data = jsonData;\r",
+									"\r",
+									"\r",
+									"pm.test(\"Invalid contact information - contact not updated\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.expect(data.message).to.be.equal(\"Phone number must contain only digits.\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"David\",\r\n  \"lastName\": \"Levi\",\r\n  \"phoneNumber\": \"A99999\",\r\n  \"address\": \"Lod\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Get Specific Contact By ID After Updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Contact is exist and received\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"const jsonData = pm.response.json();\r",
+									"const phoneNumber = jsonData.phoneNumber;\r",
+									"\r",
+									"pm.test(\"The changes wasn't updated at the contact\" ,()=>{\r",
+									"    pm.expect(pm.environment.get(\"initialize_phoneNumber\")).to.be.equal(phoneNumber);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Delete Specific Contact By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete request sended Successfully\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Failed To Get Specific Contact After Deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Contact does not exist\", () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ContactService}}/Contacts/{{first_contactId}}",
+							"host": [
+								"{{ContactService}}"
+							],
+							"path": [
+								"Contacts",
+								"{{first_contactId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.environment.set(\"ContactService\", \"https://localhost:44328\");\r",
+					"//pm.environment.set(\"ContactService\", \"http://localhost:8080\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
